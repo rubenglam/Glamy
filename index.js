@@ -1,27 +1,25 @@
-const publicToken = 'https://discord.com/api/oauth2/authorize?client_id=1032012422992646264&permissions=2150640704&scope=bot%20applications.commands';
+const { Client, Events, GatewayIntentBits, Partials } = require('discord.js');
+const { configureCommands } = require('./handlers/commands.handler.js');
+const { configureDistube } = require('./handlers/distube.handler.js');
+const { configureEvents } = require('./handlers/events.handler.js');
+const { token } = require('./config.json');
 
-const { Client, GatewayIntentBits } = require('discord.js');
-const dotenv = require('dotenv');
-const { REST } = require('@discordjs/rest');
-
-dotenv.config();
-
-const token = process.env.TOKEN;
-const clientId = '1032012422992646264';
-
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
-client.on('ready', () => {
-	console.log(`Logged in as ${client.user.tag}!`);
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		// GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildVoiceStates,
+		// GatewayIntentBits.GuildMessageReactions,
+		// GatewayIntentBits.GuildEmojisAndStickers,
+	],
+	//partials: [Partials.Message, Partials.Channel, Partials.Reaction, Partials.GuildMember, Partials.User],
 });
 
-client.on('interactionCreate', async interaction => {
-	console.log('interaction');
-	if (!interaction.isChatInputCommand()) return;
+configureDistube(client);
 
-	if (interaction.commandName === 'ping') {
-		await interaction.reply('Pong!');
-	}
-});
+configureEvents(client);
+configureCommands(client);
 
-client.login(token);
+client.login(token).catch('Error connecting client');
