@@ -1,4 +1,7 @@
 const { DisTube } = require('distube');
+const { SpotifyPlugin } = require('@distube/spotify');
+const { SoundCloudPlugin } = require('@distube/soundcloud');
+const { YtDlpPlugin } = require('@distube/yt-dlp');
 
 const configureDistube = client => {
 	const distube = new DisTube(client, {
@@ -21,18 +24,18 @@ const configureDistube = client => {
 		// youtubeDL: false,
 		// todo npm i @distube/spotify ...
 		plugins: [
-			// new SpotifyPlugin({
-			// 	parallel: true,
-			// })
+			new SpotifyPlugin({
+				emitEventsAfterFetching: true,
+			}),
+			new SoundCloudPlugin(),
+			new YtDlpPlugin(),
 		],
 	});
 
 	// Subscribe to DisTube events
-	distube.on('playSong', (queue, songs) => {
+	distube.on('playSong', (queue, song) => {
 		// !!!! TODO Fix displayed songName
-		const queueSongs = songs.related;
-		const songName = songs.related[queueSongs.length - 1].name;
-		queue.textChannel.send(`Reproduciendo canción ${songName}`);
+		queue.textChannel.send(`Reproduciendo canción ${song.name}`);
 	});
 
 	distube.on('addSong', (queue, song) => {

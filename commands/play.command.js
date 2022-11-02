@@ -1,11 +1,22 @@
 const { SlashCommandBuilder } = require('discord.js');
 
+const getSong = interaction => {
+	const paramSong = interaction.options.get('song');
+	switch (paramSong.value) {
+		case '1':
+			return 'https://www.youtube.com/watch?v=s7cf7GE7kvE';
+		case '2':
+			return 'https://www.youtube.com/watch?v=FL1QjjkZVm4';
+		default:
+			return paramSong.value;
+	}
+};
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('play')
 		.setDescription('Playing song!')
 		.addStringOption(option => option.setName('song').setDescription('Song name to reproduce').setRequired(true)),
-	// .addStringOption(option => option.setName('input').setDescription('The input to echo back')),
 	run: async (client, interaction) => {
 		// check
 		if (!interaction.member.voice.channel) return interaction.reply('You need to be in voice channel to use this command');
@@ -16,8 +27,8 @@ module.exports = {
 		//let embed = new MessageEvent();
 
 		// get params
-		const paramSong = interaction.options.get('song');
-		const songName = paramSong.value === '1' ? 'https://www.youtube.com/watch?v=s7cf7GE7kvE' : paramSong.value;
+
+		const songName = getSong(interaction);
 
 		//const songName = '';
 		const member = interaction.member;
@@ -49,7 +60,7 @@ module.exports = {
 		// //console.log(message);
 		// console.log(interaction.client.distube);
 
-		interaction.reply(`Searching song...${songName}`);
+		interaction.reply(`Searching song... ${songName}`);
 	},
 	runExample: async (client, interaction) => {
 		if (!interaction.member.voice.channel) return interaction.editReply('You need to be in a VC to use this command');
