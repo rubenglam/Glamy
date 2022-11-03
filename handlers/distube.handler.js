@@ -22,9 +22,9 @@ const configureDistube = client => {
 			dlChunkSize: 1024 * 1024 * 4,
 		},
 		// youtubeDL: false,
-		// todo npm i @distube/spotify ...
 		plugins: [
 			new SpotifyPlugin({
+				parallel: true,
 				emitEventsAfterFetching: true,
 			}),
 			new SoundCloudPlugin(),
@@ -34,10 +34,8 @@ const configureDistube = client => {
 
 	// Subscribe to DisTube events
 	distube.on('playSong', (queue, song) => {
-		// !!!! TODO Fix displayed songName
 		queue.textChannel.send(`Reproduciendo canción ${song.name}`);
 	});
-
 	distube.on('addSong', (queue, song) => {
 		queue.textChannel.send('Adding song');
 	});
