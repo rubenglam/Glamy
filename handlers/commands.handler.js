@@ -1,6 +1,5 @@
 const { Collection } = require('discord.js');
 const { REST, Routes } = require('discord.js');
-const { token, clientId, guildId, version } = require('../config.json');
 
 const fs = require('fs');
 const path = require('path');
@@ -35,11 +34,11 @@ const deployCommands = () => {
 		commands.push(command.data.toJSON());
 	}
 
-	const rest = new REST({ version: '10' }).setToken(token);
+	const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 	(async () => {
 		try {
-			await rest.put(Routes.applicationCommands(clientId), { body: commands });
+			await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), { body: commands });
 		} catch (error) {
 			console.error(error);
 		}
