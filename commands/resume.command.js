@@ -1,15 +1,15 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
-	data: new SlashCommandBuilder().setName('resume').setDescription('Resume the current song!'),
+	data: new SlashCommandBuilder().setName('resume').setDescription('Reanudar la canción'),
 	run: async (client, interaction) => {
 		const queue = client.distube.getQueue(interaction);
-		if (!queue) return interaction.reply('No songs added');
+		if (!queue) return interaction.reply('Ninguna canción añadida');
 		if (queue.paused) {
 			queue.resume();
-			interaction.reply('Song resumed');
+			interaction.reply('Canción reanudada');
 		} else {
-			interaction.reply('Song already resumed');
+			interaction.reply('La canción ya se está escuchando');
 		}
 	},
 };

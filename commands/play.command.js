@@ -15,11 +15,11 @@ const getSong = interaction => {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('play')
-		.setDescription('Playing song!')
-		.addStringOption(option => option.setName('song').setDescription('Song name to reproduce').setRequired(true)),
+		.setDescription('Escuchar canciones')
+		.addStringOption(option => option.setName('song').setDescription('Nombre o enlace de la canción a reproducir').setRequired(true)),
 	run: async (client, interaction) => {
 		// check
-		if (!interaction.member.voice.channel) return interaction.reply('You need to be in voice channel to use this command');
+		if (!interaction.member.voice.channel) return interaction.reply('Necesitas estar en un canal de voz para usar este comando');
 
 		// const queue = await client.player.createQueue(interaction.guild);
 		// if (!queue.connection) await queue.connect(interaction.member.voice.channel);
@@ -60,7 +60,7 @@ module.exports = {
 		// //console.log(message);
 		// console.log(interaction.client.distube);
 
-		interaction.reply(`Searching song... ${songName}`);
+		interaction.reply(`Buscando canción... ${songName}`);
 	},
 	runExample: async (client, interaction) => {
 		if (!interaction.member.voice.channel) return interaction.editReply('You need to be in a VC to use this command');

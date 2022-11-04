@@ -5,7 +5,7 @@ const disconnectMessages = ['Tiri titi titi!', 'Tiririn!', 'Tirurun!'];
 const getRandomDisconnectMessage = () => disconnectMessages[Math.floor(Math.random() * disconnectMessages.length)];
 
 module.exports = {
-	data: new SlashCommandBuilder().setName('stop').setDescription('Stop the current queue songs!'),
+	data: new SlashCommandBuilder().setName('stop').setDescription('Parar el bot!'),
 	run: async (client, interaction) => {
 		client.distube.stop(interaction.guildId);
 		await interaction.reply(getRandomDisconnectMessage());
