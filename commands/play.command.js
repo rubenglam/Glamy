@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
+import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from '@discordjs/builders';
+import { ButtonStyle, SlashCommandBuilder } from 'discord.js';
 
 const getSong = interaction => {
 	const paramSong = interaction.options.get('song');
@@ -12,55 +13,33 @@ const getSong = interaction => {
 	}
 };
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('play')
 		.setDescription('Escuchar canciones')
 		.addStringOption(option => option.setName('song').setDescription('Nombre o enlace de la canción a reproducir').setRequired(true)),
 	run: async (client, interaction) => {
-		// check
-		if (!interaction.member.voice.channel) return interaction.reply('Necesitas estar en un canal de voz para usar este comando');
-
-		// const queue = await client.player.createQueue(interaction.guild);
-		// if (!queue.connection) await queue.connect(interaction.member.voice.channel);
-
-		//let embed = new MessageEvent();
-
-		// get params
+		if (!client.isUserInRoom(interaction)) {
+			interaction.reply('Necesitas estar en un canal de voz para usar este comando');
+			return;
+		}
 
 		const songName = getSong(interaction);
 
-		//const songName = '';
 		const member = interaction.member;
 		const voiceChannel = interaction.member.voice.channel;
 		const textChannel = interaction.channel;
-
-		// const message = interaction.message;
-		// console.log(message);
 
 		client.distube.play(voiceChannel, songName, {
 			member,
 			textChannel,
 		});
 
-		// if (interaction.options.getSubcommand() === 'song') {
-		// 	const result = await client.player.se
-		// } else if (interaction.options.getSubcommand() === 'playlist') {
-		// } else if (interaction.options.getSubcommand() === 'search') {
-		// }
-
-		// check params
-		// const options = interaction.options;
-		// //console.log(options);
-
-		// const songName = options.getString('song');
-		// //console.log(songName);
-		// // functionality
-
-		// //console.log(message);
-		// console.log(interaction.client.distube);
-
-		interaction.reply(`Buscando canción... ${songName}`);
+		const embedded = new EmbedBuilder().setTitle(`Buscando canción`).setDescription(songName);
+		interaction.reply({ embeds: [embedded] });
+	},
+	runButton: async (client, interaction, id) => {
+		console.log(id);
 	},
 	runExample: async (client, interaction) => {
 		if (!interaction.member.voice.channel) return interaction.editReply('You need to be in a VC to use this command');

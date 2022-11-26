@@ -1,7 +1,9 @@
 import { SlashCommandBuilder } from 'discord.js';
 
 export default {
-	data: new SlashCommandBuilder().setName('resume').setDescription('Reanudar la canción'),
+	data: {
+		name: 'resume',
+	},
 	run: async (client, interaction) => {
 		if (!client.isBotInRoom()) {
 			interaction.reply('El bot no se encuentra en ninguna sala');

@@ -1,9 +1,10 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import config from '../config.json' assert { type: 'json' };
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder().setName('version').setDescription('Devuelve el número de versión'),
 	run: async (client, interaction) => {
-		const embedded = new EmbedBuilder().setTitle(`Versión ${process.env.VERSION}`).addFields({
+		const embedded = new EmbedBuilder().setTitle(`Versión ${config.version}`).addFields({
 			name: `BETA`,
 			value: `Desarrollado por RubenGlam`,
 		});
