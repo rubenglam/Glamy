@@ -15,7 +15,7 @@ const configureDistube = client => {
 		emitAddSongWhenCreatingQueue: false,
 		searchSongs: 0,
 		nsfw: false,
-		emptyCooldown: 25,
+		emptyCooldown: 1000 * 60 * 5,
 		ytdlOptions: {
 			highWaterMark: 1024 * 1024 * 64,
 			quality: 'highestaudio',
