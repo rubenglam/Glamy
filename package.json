@@ -7,10 +7,10 @@
 	"author": "RubenGlam <rubenbermudezsaez@gmail.com>",
 	"license": "MIT",
 	"scripts": {
+		"build": "echo \"Building...\"",
 		"nodemon": "nodemon index.js",
 		"start": "node index.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "node index.js",
 		"production": "node index.js"
 	},
 	"dependencies": {
@@ -29,5 +29,6 @@
 		"fluent-ffmpeg": "^2.1.2",
 		"nodemon": "^2.0.20",
 		"ytdl-core": "^4.11.2"
-	}
+	},
+	"devDependencies": {}
 }
