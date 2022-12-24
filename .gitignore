@@ -10,3 +10,4 @@ config.json
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+yarn.lock
